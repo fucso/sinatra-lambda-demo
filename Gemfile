@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'sinatra'
+gem 'sinatra', '~> 2.0'
 gem 'json'
-gem 'rack'
+gem 'rack', '~> 2.2'
 gem 'rack-contrib'
 gem 'aws-record'
 gem 'rake'
