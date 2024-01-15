@@ -16,7 +16,8 @@ function cleanup {
 
 trap cleanup SIGINT
 
-data_dir="$(pwd)/container/db/data"
+db_dir="$(pwd)/container/db"
+data_dir="${db_dir}/data"
 if [ ! -d "$data_dir" ]; then
     echo "Creating PostgreSQL data directory..."
     mkdir -p "$data_dir"
@@ -26,7 +27,9 @@ docker run \
   --name sinatra-lambda-db \
   -e POSTGRES_USER=sinatra-lambda-demo \
   -e POSTGRES_PASSWORD=password \
+  -e POSTGRES_DB=sinatra-lambda-demo \
   -v "${data_dir}":/var/lib/postgresql/data \
+  -v "${db_dir}/init":/docker-entrypoint-initdb.d \
   -p 5432:5432 \
   -d --rm \
   postgres
