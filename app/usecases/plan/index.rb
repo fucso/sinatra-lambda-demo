@@ -1,19 +1,12 @@
+require_relative '../../repositories/database'
+require_relative '../../repositories/plan'
+
 module UseCase
   module Plan
     class Index
       def execute
-        {
-          plans: [
-            {
-              id: 1,
-              name: 'Plan 1',
-            },
-            {
-              id: 2,
-              name: 'Plan 2',
-            },
-          ]
-        }
+        database = Repository::Database.new
+        Repository::Plan.all(database)
       end
     end
   end
