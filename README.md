@@ -1,4 +1,4 @@
-# Dev
+# command
 ## setup
 ### install sam
 
@@ -12,18 +12,27 @@ brew install aws-sam-cli
 bin/bundle.sh
 ```
 
+## dev
+### start
+
+Hot reload is supported.
+
+```
+bin/dev.sh
+```
+
 ### DB console
 
 ```
 docker exec -it sinatra-lambda-db psql -U sinatra-lambda-demo -d sinatra-lambda-demo
 ```
 
-## run
+### build
 
-Hot reload is supported.
+When Lambda Layer updated, use this command to build layers and update template.yaml. 
 
 ```
-bin/dev.sh
+bin/build.sh
 ```
 
 # Note

@@ -1,6 +1,11 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
+Parameters:
+   PGLayerContentUri:
+     Type: String
+     Default: 'pg_layer/'
+
 Resources:
   SinatraFunction:
     Type: 'AWS::Serverless::Function'
@@ -21,6 +26,8 @@ Resources:
                 Path: /
                 Method: ANY
                 RestApiId: !Ref SinatraAPI
+      Layers:
+        - !Ref PGLayer
       Environment:
         Variables:
           DB_USER: dummy
@@ -74,6 +81,14 @@ Resources:
       ProvisionedThroughput: 
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
+  PGLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      CompatibleRuntimes:
+        - ruby3.2
+      ContentUri: !Ref PGLayerContentUri
+    Metadata:
+      BuildMethod: makefile
 Outputs:
   SinatraAppUrl:
     Description: App endpoint URL
