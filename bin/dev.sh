@@ -34,7 +34,7 @@ docker run \
   -d --rm \
   postgres
 
-sam local start-api &
+sam local start-api --env-vars env.json &
 SAM_PID=$!
 echo "SAM Local started with PID $SAM_PID"
 

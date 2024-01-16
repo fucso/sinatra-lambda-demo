@@ -8,10 +8,8 @@ brew install aws-sam-cli
 
 ### bundle install
 
-If you don't have the required Ruby version installed on your host machine, you can run `bundle install` in a Docker container.
-
 ```
-docker run --rm -v "$PWD":/var/task -w /var/task -it public.ecr.aws/sam/build-ruby3.2:latest-x86_64 container/bundle.sh
+bin/bundle.sh
 ```
 
 ### DB console
@@ -25,7 +23,7 @@ docker exec -it sinatra-lambda-db psql -U sinatra-lambda-demo -d sinatra-lambda-
 Hot reload is supported.
 
 ```
-sam local start-api
+bin/dev.sh
 ```
 
 # Note
