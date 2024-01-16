@@ -21,6 +21,12 @@ Resources:
                 Path: /
                 Method: ANY
                 RestApiId: !Ref SinatraAPI
+      Environment:
+        Variables:
+          DB_USER: dummy
+          DB_PASSWORD: dummy
+          DB_NAME: dummy
+          DB_HOST: dummy
   SinatraAPI:
     Type: AWS::Serverless::Api
     Properties:
