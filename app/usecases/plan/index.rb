@@ -1,12 +1,12 @@
-require_relative '../../repositories/database'
+require_relative '../../infrastructures/database'
 require_relative '../../repositories/plan'
 
 module UseCase
   module Plan
     class Index
       def execute
-        database = Repository::Database.new
-        Repository::Plan.all(database)
+        database = Infrastracture::Database.new
+        Repository::Plan.new(database).all
       end
     end
   end
