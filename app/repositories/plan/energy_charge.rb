@@ -1,7 +1,7 @@
 require_relative '../../domains/plan/energy_charge.rb'
 
 module Repository
-  class Plan < Repository::Base
+  class Plan
     class EnergyCharge
       class << self
         def to_model(record)

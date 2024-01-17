@@ -1,7 +1,7 @@
 require_relative '../../domains/plan/demand_charge'
 
 module Repository
-  class Plan < Repository::Base
+  class Plan
     class DemandCharge
       class << self
         def to_model(record)

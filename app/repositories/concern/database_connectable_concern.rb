@@ -1,7 +1,7 @@
-require_relative '../infrastructures/database'
+require_relative '../../infrastructures/database'
 
 module Repository
-  class Base
+  module DatabaseConnectableConcern
     def initialize(database)
       @database = database
     end

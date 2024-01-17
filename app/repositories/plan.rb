@@ -1,15 +1,16 @@
 require 'sequel'
-require_relative 'base'
+require_relative 'concern/database_connectable_concern'
 require_relative 'plan/demand_charge'
 require_relative 'plan/energy_charge'
 require_relative '../domains/plan'
 
 module Repository
-  class Plan < Repository::Base
+  class Plan
+    include DatabaseConnectableConcern
 
     RELATIONS = {
-      demand_charges: Repository::Plan::DemandCharge,
-      energy_charges: Repository::Plan::EnergyCharge
+      demand_charges: DemandCharge,
+      energy_charges: EnergyCharge
     }
 
     def all
