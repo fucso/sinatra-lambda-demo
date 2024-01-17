@@ -1,8 +1,11 @@
-FROM ruby:3.2-slim
+FROM public.ecr.aws/sam/build-ruby3.2
 
 WORKDIR /usr/src/app
 
-RUN apt-get update -qq && \
-    apt-get install -y build-essential libpq-dev
+RUN yum install -y amazon-linux-extras \
+    && amazon-linux-extras enable postgresql13 \
+    && yum group install "Development Tools" -y
+RUN yum install -y postgresql postgresql-devel
 
+# Install Bundler for Ruby
 RUN gem install bundler

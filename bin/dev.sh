@@ -34,7 +34,10 @@ docker run \
   -d --rm \
   postgres
 
-sam local start-api --env-vars env.json --parameter-overrides PGLayerContentUri=".aws-sam/build/PGLayer/lib" &
+sam local start-api \
+  --env-vars env.json \
+  --template template.yaml \
+  --parameter-overrides PGLayerContentUri=".aws-sam/build/PGLayer" &
 SAM_PID=$!
 echo "SAM Local started with PID $SAM_PID"
 
