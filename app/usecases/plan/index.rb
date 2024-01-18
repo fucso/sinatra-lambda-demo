@@ -6,7 +6,12 @@ module UseCase
     class Index
       def execute
         database = Infrastracture::Database.new
-        Repository::Plan.new(database).all
+        plans = Repository::Plan.new(database).all
+        
+        plan = plans[0]
+        puts plan.demand_charges[0].charge
+
+        plans
       end
     end
   end

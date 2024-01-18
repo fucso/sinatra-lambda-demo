@@ -1,17 +1,12 @@
 require 'sequel'
-require_relative 'concern/database_connectable_concern'
-require_relative 'plan/demand_charge'
-require_relative 'plan/energy_charge'
 require_relative '../domains/plan'
+require_relative 'concern/database_connectable_concern'
 
 module Repository
   class Plan
     include DatabaseConnectableConcern
 
-    RELATIONS = {
-      demand_charges: DemandCharge,
-      energy_charges: EnergyCharge
-    }
+    RELATIONS = [:demand_charges, :energy_charges].freeze
 
     def all
       dataset_to_model(query.all)
@@ -32,7 +27,7 @@ module Repository
       plan_ids = dataset.map { |p| p[:id] }
 
       # { table_name: { plan_id: record[] } }
-      relations = RELATIONS.keys.map do |table|
+      relations = RELATIONS.map do |table|
         records = @database.query(table).where(plan_id: plan_ids).all
         [table, records.group_by { |r| r[:plan_id] }]
       end.to_h
@@ -41,20 +36,14 @@ module Repository
         id = plan[:id]
         sub_models = relations.map do |table, records_by_plan|
           rows = records_by_plan[id]
-          [table, rows.map { |row| RELATIONS[table].to_model(row) }]
+          [table, rows]
         end.to_h
-        to_model(plan, **sub_models)
+        to_model(plan.merge(sub_models))
       end
     end
 
-    def to_model(record, demand_charges: [], energy_charges: [])
-      Plan.new(
-        id: record[:id],
-        name: record[:name],
-        code: record[:code],
-        demand_charges: demand_charges,
-        energy_charges: energy_charges
-      )
+    def to_model(record)
+      ::Plan.new(**record)
     end
   end
 end

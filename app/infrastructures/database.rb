@@ -9,7 +9,6 @@ module Infrastracture
       user = ENV['DB_USER']
       password = ENV['DB_PASSWORD']
       database = ENV['DB_NAME']
-      puts "connecting to postgres://#{user}:#{password}@#{host}/#{database}"
       @db = Sequel.connect("postgres://#{user}:#{password}@#{host}/#{database}")
     end
 
