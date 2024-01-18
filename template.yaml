@@ -71,16 +71,6 @@ Resources:
       Action: lambda:InvokeFunction
       FunctionName: !Ref SinatraFunction
       Principal: apigateway.amazonaws.com
-  FeedbackTable:
-    Type: AWS::Serverless::SimpleTable
-    Properties:
-      TableName: FeedbackServerlessSinatraTable
-      PrimaryKey: 
-        Name: id
-        Type: String
-      ProvisionedThroughput: 
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
   PGLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
