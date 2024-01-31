@@ -2,9 +2,21 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
 Parameters:
-   PGLayerContentUri:
-     Type: String
-     Default: 'pg_layer/'
+  PGLayerContentUri:
+    Type: String
+    Default: 'pg_layer/'
+  PGLayerS3Bucket:
+    Type: String
+  PGLayerS3Key:
+    Type: String
+  EnvDbUser:
+    Type: String
+  EnvDbPassword:
+    Type: String
+  EnvDbName:
+    Type: String
+  EnvDbHost:
+    Type: String
 
 Resources:
   SinatraFunction:
@@ -13,9 +25,6 @@ Resources:
       FunctionName: SinatraApp
       Handler: lambda.handler
       Runtime: ruby3.2
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref FeedbackTable
       CodeUri: "./"
       MemorySize: 512
       Timeout: 30
@@ -30,10 +39,10 @@ Resources:
         - !Ref PGLayer
       Environment:
         Variables:
-          DB_USER: dummy
-          DB_PASSWORD: dummy
-          DB_NAME: dummy
-          DB_HOST: dummy
+          DB_USER: !Ref EnvDbUser
+          DB_PASSWORD: !Ref EnvDbPassword
+          DB_NAME: !Ref EnvDbName
+          DB_HOST: !Ref EnvDbHost
   SinatraAPI:
     Type: AWS::Serverless::Api
     Properties:
@@ -76,7 +85,8 @@ Resources:
     Properties:
       CompatibleRuntimes:
         - ruby3.2
-      ContentUri: !Ref PGLayerContentUri
+      ContentUri:
+        !Ref PGLayerContentUri
     Metadata:
       BuildMethod: makefile
 Outputs:
