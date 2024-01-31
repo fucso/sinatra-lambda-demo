@@ -9,6 +9,7 @@ gem 'rake'
 gem 'pg'
 gem 'sequel'
 
+gem 'activemodel'
 gem 'activesupport-json_encoder', '~> 1.1'
 
 # These are the dependencies that are used only for unit tests.
