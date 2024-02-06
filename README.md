@@ -6,6 +6,12 @@
 brew install aws-sam-cli
 ```
 
+### initialize Docker
+
+```
+bin/init.sh
+```
+
 ### bundle install
 
 ```
@@ -27,7 +33,7 @@ bin/dev.sh
 docker exec -it sinatra-lambda-db psql -U sinatra-lambda-demo -d sinatra-lambda-demo
 ```
 
-### build
+### build Lambda Layer
 
 When Lambda Layer updated, use this command to build layers and update template.yaml. 
 
