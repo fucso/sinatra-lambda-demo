@@ -1,2 +1,8 @@
-.ruby-gemset
-.ruby-version
+vendor/
+.bundle/
+
+container/db/data
+
+.aws-sam/build.toml
+.aws-sam/build/template.yaml
+.aws-sam/build/SinatraFunction

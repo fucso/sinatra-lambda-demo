@@ -1,13 +1,18 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
+Parameters:
+   PGLayerContentUri:
+     Type: String
+     Default: 'pg_layer/'
+
 Resources:
   SinatraFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
       FunctionName: SinatraApp
       Handler: lambda.handler
-      Runtime: ruby2.5
+      Runtime: ruby3.2
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref FeedbackTable
@@ -21,6 +26,14 @@ Resources:
                 Path: /
                 Method: ANY
                 RestApiId: !Ref SinatraAPI
+      Layers:
+        - !Ref PGLayer
+      Environment:
+        Variables:
+          DB_USER: dummy
+          DB_PASSWORD: dummy
+          DB_NAME: dummy
+          DB_HOST: dummy
   SinatraAPI:
     Type: AWS::Serverless::Api
     Properties:
@@ -58,16 +71,14 @@ Resources:
       Action: lambda:InvokeFunction
       FunctionName: !Ref SinatraFunction
       Principal: apigateway.amazonaws.com
-  FeedbackTable:
-    Type: AWS::Serverless::SimpleTable
+  PGLayer:
+    Type: AWS::Serverless::LayerVersion
     Properties:
-      TableName: FeedbackServerlessSinatraTable
-      PrimaryKey: 
-        Name: id
-        Type: String
-      ProvisionedThroughput: 
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
+      CompatibleRuntimes:
+        - ruby3.2
+      ContentUri: !Ref PGLayerContentUri
+    Metadata:
+      BuildMethod: makefile
 Outputs:
   SinatraAppUrl:
     Description: App endpoint URL
