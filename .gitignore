@@ -1,8 +1,14 @@
 vendor/
 .bundle/
 
+.env
+
 container/db/data
 
 .aws-sam/build.toml
 .aws-sam/build/template.yaml
 .aws-sam/build/SinatraFunction
+.aws-sam/build/PGLayer.zip
+
+serverless-output.yaml
+template-deploy.yaml
